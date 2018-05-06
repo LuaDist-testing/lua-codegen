@@ -16,9 +16,8 @@ _ENV = nil
 local m = {}
 
 local function gsub (s, patt, repl)
-    patt = lpeg.P(patt)
-    patt = lpeg.Cs((patt / repl + 1)^0)
-    return lpeg.match(patt, s)
+    local p = lpeg.Cs((patt / repl + 1)^0)
+    return p:match(s)
 end
 
 local function split (s, sep, func)
@@ -269,8 +268,6 @@ m.new = new
 setmetatable(m, {
     __call = function (func, ...) return new(...) end
 })
-_G.CodeGen = _G.CodeGen or {}
-_G.CodeGen.lpeg = m
 
 _G.package.loaded['CodeGen'] = m
 
