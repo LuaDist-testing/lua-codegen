@@ -6,10 +6,13 @@ ifndef REV
   REV   := 1
 endif
 
-ifndef DESTDIR
-  DESTDIR := /usr/local
-endif
-LIBDIR  := $(DESTDIR)/share/lua/5.1
+LUAVER  := 5.1
+PREFIX  := /usr/local
+DPREFIX := $(DESTDIR)$(PREFIX)
+LIBDIR  := $(DPREFIX)/share/lua/$(LUAVER)
+
+all:
+	@echo "Nothing to build here, you can just make install"
 
 install:
 	mkdir -p $(LIBDIR)/CodeGen

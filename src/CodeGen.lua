@@ -197,14 +197,13 @@ local function eval (self, name)
 
         if template:find "\n" then
             local results = {}
-            for line in template:gmatch "([^\n]*)\n" do
+            for line in template:gmatch "([^\n]*)\n?" do
                 local result = interpolate_line(line)
                 if result == line or not result:match'^%s*$' then
                     results[#results+1] = result
                 end
                 lineno = lineno + 1
             end
-            results[#results+1] = ''
             return tconcat(results, "\n")
         else
             return interpolate_line(template)
@@ -223,7 +222,7 @@ end
 function new (env, ...)
     local obj = { env or {}, ... }
     setmetatable(obj, {
-        __tostring = function () return 'CodeGen' end,
+        __tostring = function () return m._NAME end,
         __call  = function (...) return eval(...) end,
         __index = function (t, k)
                       for i = 1, #t do
@@ -243,9 +242,10 @@ setmetatable(m, {
 })
 _G.CodeGen = m
 
-m._VERSION = "0.2.1"
+m._NAME = ...
+m._VERSION = "0.2.2"
 m._DESCRIPTION = "lua-CodeGen : a template engine"
-m._COPYRIGHT = "Copyright (c) 2010 Francois Perrad"
+m._COPYRIGHT = "Copyright (c) 2010-2011 Francois Perrad"
 return m
 --
 -- This library is licensed under the terms of the MIT/X11 license,

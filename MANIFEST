@@ -20,4 +20,5 @@ test/05-cond.t
 test/06-external.t
 test/07-inheritance.t
 test/09-examples.t
+test/09-graph.t
 test/tmpl.lua
