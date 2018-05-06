@@ -1,17 +1,17 @@
 -- This file was automatically generated for the LuaDist project.
 
 package = 'lua-CodeGen'
-version = '0.2.2-1'
+version = '0.2.3-1'
 -- LuaDist source
 source = {
-  tag = "0.2.2-1",
+  tag = "0.2.3-1",
   url = "git://github.com/LuaDist-testing/lua-codegen.git"
 }
 -- Original source
 -- source = {
---     url = 'http://cloud.github.com/downloads/fperrad/lua-CodeGen/lua-codegen-0.2.2.tar.gz',
---     md5 = '782a40b6ac55ee3077e10f302e301706',
---     dir = 'lua-CodeGen-0.2.2',
+--     url = 'http://cloud.github.com/downloads/fperrad/lua-CodeGen/lua-codegen-0.2.3.tar.gz',
+--     md5 = '03f5db242f3343baded7c61a70994537',
+--     dir = 'lua-CodeGen-0.2.3',
 -- }
 description = {
     summary = "a template engine",
@@ -39,6 +39,7 @@ build = {
     modules = {
         ['CodeGen']             = 'src/CodeGen.lua',
         ['CodeGen.Graph']       = 'src/CodeGen/Graph.lua',
+        ['CodeGen.lpeg']        = 'src/CodeGen/lpeg.lua',
     },
     copy_directories = { 'doc', 'test' },
 }

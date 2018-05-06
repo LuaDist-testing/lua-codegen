@@ -18,10 +18,12 @@ install:
 	mkdir -p $(LIBDIR)/CodeGen
 	cp src/CodeGen.lua              $(LIBDIR)
 	cp src/CodeGen/Graph.lua        $(LIBDIR)/CodeGen
+	cp src/CodeGen/lpeg.lua         $(LIBDIR)/CodeGen
 
 uninstall:
 	rm -f $(LIBDIR)/CodeGen.lua
 	rm -f $(LIBDIR)/CodeGen/Graph.lua
+	rm -f $(LIBDIR)/CodeGen/lpeg.lua
 
 manifest_pl := \
 use strict; \
@@ -92,10 +94,11 @@ check: test
 
 test:
 	cd src && prove --exec=$(LUA) ../test/*.t
+	cd src && prove --exec="$(LUA) -l CodeGen.lpeg" ../test/*.t
 
 coverage:
 	rm -f src/luacov.stats.out src/luacov.report.out
-	cd src && prove --exec="$(LUA) -lluacov" ../test/*.t
+	-cd src && prove --exec="$(LUA) -lluacov" ../test/*.t
 	cd src && luacov
 
 README.html: README.md

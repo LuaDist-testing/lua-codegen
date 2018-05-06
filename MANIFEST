@@ -8,9 +8,11 @@ doc/codegen.html
 doc/graph.html
 doc/graph.png
 doc/index.html
+doc/lpeg.html
 rockspec.in
 src/CodeGen.lua
 src/CodeGen/Graph.lua
+src/CodeGen/lpeg.lua
 test/00-require.t
 test/01-basic.t
 test/02-attr.t
