@@ -8,9 +8,11 @@ local tonumber = tonumber
 local tostring = tostring
 local type = type
 local tconcat = require 'table'.concat
+local _G = _G
 local string = require 'string'
 
-module 'CodeGen'
+_ENV = nil
+local m = {}
 
 local function render (val, sep, formatter)
     formatter = formatter or tostring
@@ -50,6 +52,7 @@ local function unescape(str)
     return str:gsub([[\([abfnrtv\"'])]], special)
 end
 
+local new
 local function eval (self, name)
     local cyclic = {}
     local msg = {}
@@ -233,14 +236,17 @@ function new (env, ...)
     })
     return obj
 end
+m.new = new
 
-setmetatable(_M, {
+setmetatable(m, {
     __call = function (func, ...) return new(...) end
 })
+_G.CodeGen = m
 
-_VERSION = "0.2.0"
-_DESCRIPTION = "lua-CodeGen : a template engine"
-_COPYRIGHT = "Copyright (c) 2010 Francois Perrad"
+m._VERSION = "0.2.1"
+m._DESCRIPTION = "lua-CodeGen : a template engine"
+m._COPYRIGHT = "Copyright (c) 2010 Francois Perrad"
+return m
 --
 -- This library is licensed under the terms of the MIT/X11 license,
 -- like Lua itself.

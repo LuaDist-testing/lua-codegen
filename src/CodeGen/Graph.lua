@@ -5,12 +5,14 @@
 
 local pairs = pairs
 local type = type
+local _G = _G
 local table = require 'table'
 local CodeGen = require 'CodeGen'
 
-module 'CodeGen.Graph'
+_ENV = nil
+local m = {}
 
-template = CodeGen {
+local template = CodeGen {
     TOP = [[
 digraph {
     node [ shape = none ];
@@ -27,8 +29,9 @@ ${name};
 ${caller} -> ${callee};
 ]],
 }
+m.template = template
 
-function to_dot (self)
+function m:to_dot ()
     local done = {}
     local nodes = {}
     local edges = {}
@@ -75,6 +78,8 @@ function to_dot (self)
     return dot
 end
 
+_G.CodeGen.Graph = m
+return m
 --
 -- Copyright (c) 2010 Francois Perrad
 --
