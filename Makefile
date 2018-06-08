@@ -4,7 +4,7 @@ VERSION := $(shell cd src && $(LUA) -e "m = require [[CodeGen]]; print(m._VERSIO
 TARBALL := lua-codegen-$(VERSION).tar.gz
 REV     := 1
 
-LUAVER  := 5.1
+LUAVER  := 5.3
 PREFIX  := /usr/local
 DPREFIX := $(DESTDIR)$(PREFIX)
 LIBDIR  := $(DPREFIX)/share/lua/$(LUAVER)
@@ -35,8 +35,7 @@ my @files = qw{MANIFEST}; \
 while (<>) { \
     chomp; \
     next if m{^\.}; \
-    next if m{^doc/\.}; \
-    next if m{^doc/google}; \
+    next if m{^debian/}; \
     next if m{^rockspec/}; \
     push @files, $$_; \
 } \
@@ -72,10 +71,7 @@ dist.info:
 tag:
 	git tag -a -m 'tag release $(VERSION)' $(VERSION)
 
-doc:
-	git read-tree --prefix=doc/ -u remotes/origin/gh-pages
-
-MANIFEST: doc
+MANIFEST:
 	git ls-files | perl -e '$(manifest_pl)' > MANIFEST
 
 $(TARBALL): MANIFEST
@@ -83,8 +79,6 @@ $(TARBALL): MANIFEST
 	perl -ne 'print qq{lua-CodeGen-$(VERSION)/$$_};' MANIFEST | \
 	    tar -zc -T - -f $(TARBALL)
 	rm lua-CodeGen-$(VERSION)
-	rm -rf doc
-	git rm doc/*
 
 dist: $(TARBALL)
 
@@ -96,6 +90,14 @@ rock:
 	luarocks pack rockspec/lua-codegen-$(VERSION)-$(REV).rockspec
 	luarocks pack rockspec/lua-codegen-lpeg-$(VERSION)-$(REV).rockspec
 
+deb:
+	echo "lua-codegen ($(shell git describe --dirty)) unstable; urgency=medium" >  debian/changelog
+	echo ""                         >> debian/changelog
+	echo "  * UNRELEASED"           >> debian/changelog
+	echo ""                         >> debian/changelog
+	echo " -- $(shell git config --get user.name) <$(shell git config --get user.email)>  $(shell date -R)" >> debian/changelog
+	fakeroot debian/rules clean binary
+
 check: test
 
 test: test.lua test.lpeg
@@ -105,6 +107,11 @@ test.lua:
 
 test.lpeg: src.lpeg/CodeGen/Graph.lua
 	cd src.lpeg && prove --exec=$(LUA) ../test/*.t
+
+luacheck:
+	luacheck --std=max --codes src --ignore 211/_ENV 212 421 432/self
+	luacheck --std=max --codes src.lpeg --ignore 211/_ENV 212 421 432/self
+	luacheck --std=min --config .test.luacheckrc test/*.t test/*.lua
 
 src.lpeg/CodeGen:
 	mkdir src.lpeg/CodeGen
@@ -120,17 +127,19 @@ coverage:
 coveralls:
 	rm -f src/luacov.stats.out src/luacov.report.out
 	-cd src && prove --exec="$(LUA) -lluacov" ../test/*.t
-	cd src && luacov-coveralls -e ^/usr -e test/ -e %.t$
+	cd src && luacov-coveralls -e /HERE/ -e test/ -e %.t$
 
 README.html: README.md
 	Markdown.pl README.md > README.html
 
+gh-pages:
+	mkdocs gh-deploy --clean
+
 clean:
-	rm -rf doc
 	rm -rf src.lpeg/CodeGen
 	rm -f MANIFEST *.bak src/luacov.*.out *.rockspec README.html
 
 realclean: clean
 
-.PHONY: test rockspec CHANGES dist.info
+.PHONY: test rockspec deb CHANGES dist.info
 

@@ -1,17 +1,17 @@
 -- This file was automatically generated for the LuaDist project.
 
 package = 'lua-CodeGen'
-version = '0.3.1-1'
+version = '0.3.2-1'
 -- LuaDist source
 source = {
-  tag = "0.3.1-1",
+  tag = "0.3.2-1",
   url = "git://github.com/LuaDist-testing/lua-codegen.git"
 }
 -- Original source
 -- source = {
---     url = 'http://sites.google.com/site/fperrad/lua-codegen-0.3.1.tar.gz',
---     md5 = 'cbbe4fd78cf2b8311cb832d389919051',
---     dir = 'lua-CodeGen-0.3.1',
+--     url = 'http://github.com/fperrad/lua-CodeGen/raw/releases/lua-codegen-0.3.2.tar.gz',
+--     md5 = '9c51b8c82fa6992ec65668f3d4674058',
+--     dir = 'lua-CodeGen-0.3.2',
 -- }
 description = {
     summary = "a template engine",
@@ -26,7 +26,7 @@ description = {
         lua-CodeGen is not dedicated to HTML,
         it could generate any kind of textual code.
     ]],
-    homepage = 'http://fperrad.github.com/lua-CodeGen',
+    homepage = 'http://fperrad.github.io/lua-CodeGen',
     maintainer = 'Francois Perrad',
     license = 'MIT/X11'
 }
@@ -39,5 +39,5 @@ build = {
         ['CodeGen']             = 'src/CodeGen.lua',
         ['CodeGen.Graph']       = 'src/CodeGen/Graph.lua',
     },
-    copy_directories = { 'doc', 'test' },
+    copy_directories = { 'docs', 'test' },
 }

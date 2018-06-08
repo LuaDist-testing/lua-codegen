@@ -1,7 +1,7 @@
 package = 'lua-CodeGen-LPeg'
 version = '@version@-@rev@'
 source = {
-    url = 'http://sites.google.com/site/fperrad/lua-codegen-@version@.tar.gz',
+    url = 'http://github.com/fperrad/lua-CodeGen/raw/releases/lua-codegen-@version@.tar.gz',
     md5 = '@md5@',
     dir = 'lua-CodeGen-@version@',
 }
@@ -18,7 +18,7 @@ description = {
         lua-CodeGen is not dedicated to HTML,
         it could generate any kind of textual code.
     ]],
-    homepage = 'http://fperrad.github.com/lua-CodeGen',
+    homepage = 'http://fperrad.github.io/lua-CodeGen',
     maintainer = 'Francois Perrad',
     license = 'MIT/X11'
 }
@@ -32,5 +32,5 @@ build = {
         ['CodeGen']             = 'src.lpeg/CodeGen.lua',
         ['CodeGen.Graph']       = 'src/CodeGen/Graph.lua',
     },
-    copy_directories = { 'doc', 'test' },
+    copy_directories = { 'docs', 'test' },
 }

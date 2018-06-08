@@ -5,11 +5,10 @@
 
 local pairs = pairs
 local type = type
-local _G = _G
 local table = require 'table'
 local CodeGen = require 'CodeGen'
 
-_ENV = nil
+local _ENV = nil
 local m = {}
 
 local template = CodeGen {
@@ -81,7 +80,7 @@ end
 m._NAME = ...
 return m
 --
--- Copyright (c) 2010-2011 Francois Perrad
+-- Copyright (c) 2010-2018 Francois Perrad
 --
 -- This library is licensed under the terms of the MIT/X11 license,
 -- like Lua itself.
