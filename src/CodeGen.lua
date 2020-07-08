@@ -140,7 +140,11 @@ local function eval (self, name)
                         if get_value(capt1) then
                             return apply(self, capt2)
                         else
-                            return apply(self, capt3)
+                            if v ~= nil then
+                                return apply(self, capt3)
+                            else
+                                return ''
+                            end
                         end
                     end
                 end
