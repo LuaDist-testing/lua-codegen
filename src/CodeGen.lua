@@ -19,7 +19,7 @@ local function render (val, sep, formatter)
     if val == nil then
         return ''
     end
-    if type(val) == 'table' then
+    if type(val) == 'table' and #val ~= 0 then
         local t = {}
         for i = 1, #val do
             t[i] = formatter(val[i])
