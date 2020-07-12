@@ -19,7 +19,7 @@ local function render (val, sep, formatter)
     if val == nil then
         return ''
     end
-    if type(val) == 'table' then
+    if type(val) == 'table' and #val ~= 0 then
         local t = {}
         for i = 1, #val do
             t[i] = formatter(val[i])
@@ -140,7 +140,11 @@ local function eval (self, name)
                         if get_value(capt1) then
                             return apply(self, capt2)
                         else
-                            return apply(self, capt3)
+                            if v ~= nil then
+                                return apply(self, capt3)
+                            else
+                                return ''
+                            end
                         end
                     end
                 end
